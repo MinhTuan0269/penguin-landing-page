@@ -1,0 +1,135 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penguin Bakery - Bánh ngọt thủ công cao cấp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+   
+    body {
+      font-family: 'Quicksand', sans-serif;
+    }
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1500&q=80'); /* Hình bánh đẹp, sáng, chuyên nghiệp */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #fef3c7; 
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Hero Section -->
+  <header class="hero text-center text-white py-24 px-6">
+    <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Penguin Bakery</h1>
+    <p class="text-xl mb-6 drop-shadow">Ngọt ngào trong từng chiếc bánh thủ công</p>
+    <a href="#order" class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-6 py-3 rounded-full transition">Đặt bánh ngay</a>
+  </header>
+
+  <!-- Giới thiệu sản phẩm -->
+ <section class="py-16 px-6 max-w-6xl mx-auto">
+  <h2 class="text-3xl font-bold text-center mb-12">🎂 Chúng tôi có gì?</h2>
+  <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"></div>
+</section>
+<script>
+  const products = JSON.parse(localStorage.getItem("penguin-products")) || [
+    {
+      name: "Bánh Su Kem",
+      description: "Thơm béo, mềm mịn, chuẩn vị Pháp",
+      image: "https://savourebakery.com/temp/500-500/savourebakery.com/storage/images/san-pham/Banh-lanh/436234970-841978384626757-6998579166814659493-N.jpg"
+    },
+    {
+      name: "Bánh Kem",
+      description: "Lớp bánh mỏng nhẹ kèm kem tươi",
+      image: "https://savourebakery.com/temp/500-500/savourebakery.com/storage/images/san-pham/Banh-kem-Tiramisu/Banh-Kem-Tira-2.jpg"
+    },
+    {
+      name: "Bánh Moose",
+      description: "Sinh nhật, sự kiện theo yêu cầu",
+      image: "https://savourebakery.com/temp/500-500/savourebakery.com/storage/images/Banh-Muoi-Hong-1-Banh.jpg"
+    }
+  ];
+  const grid = document.getElementById("productGrid");
+  if (products.length > 0) {
+    grid.innerHTML = products.map(p => `
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-5 flex flex-col items-center">
+        <img src="${p.image}" alt="${p.name}" class="rounded-lg shadow mb-4" style="height:180px;object-fit:cover;width:100%;max-width:240px;">
+        <h3 class="text-xl font-semibold mt-2 mb-1">${p.name}</h3>
+        <p class="text-gray-600 text-sm mb-2">${p.description}</p>
+        <button class="mt-auto bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-5 py-2 rounded-full transition text-sm shadow">Đặt bánh</button>
+      </div>
+    `).join('');
+  } else {
+    grid.innerHTML = `<div class="col-span-3 text-center text-gray-400">Chưa có sản phẩm nào.</div>`;
+  }
+</script>
+
+  <!-- Phản hồi khách hàng -->
+  <section class="bg-yellow-50 py-12 px-6">
+    <h2 class="text-3xl font-bold text-center mb-10">💬 Khách hàng nói gì?</h2>
+    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-center">
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p>“Bánh ở đây siêu ngon! Giao hàng nhanh, đóng gói xịn xò.”</p>
+        <span class="block mt-4 font-semibold">– Lan Anh, Q.1</span>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p>“Mình đặt sinh nhật cho bé, ai cũng khen bánh đẹp và thơm!”</p>
+        <span class="block mt-4 font-semibold">– Chị Mai, Tân Bình</span>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p>“Trang web dễ đặt hàng, có hỗ trợ cá nhân hóa rất tiện.”</p>
+        <span class="block mt-4 font-semibold">– Tuấn, Q.3</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Đặt hàng -->
+  <section id="order" class="py-16 px-6 max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-8">📦 Đặt bánh ngay</h2>
+   <form action="https://formspree.io/f/mvgrbyqn" method="POST" class="space-y-6 bg-white p-8 rounded-lg shadow">
+  <input type="text" name="name" placeholder="Họ tên của bạn" required class="w-full border p-3 rounded">
+  <input type="email" name="email" placeholder="Email" required class="w-full border p-3 rounded">
+  <input type="text" name="phone" placeholder="Số điện thoại" required class="w-full border p-3 rounded">
+  <textarea name="message" placeholder="Bạn muốn đặt loại bánh gì?" required class="w-full border p-3 rounded h-32"></textarea>
+  <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 w-full py-3 text-lg font-semibold rounded transition">Gửi đơn hàng</button>
+</form>
+  </section>
+
+  <!-- Footer -->
+ <footer class="text-center py-6 text-sm bg-gray-100 mt-12">
+  <p>
+    Theo dõi chúng tôi tại 
+    <a href="https://facebook.com/PenguinBakery" target="_blank" class="text-blue-600 font-semibold">Facebook</a>
+    <span class="mx-2 text-gray-300">|</span>
+    <a href="admin.html" class="text-gray-400 hover:text-yellow-500 transition" style="font-size:0.95em">Quản trị</a>
+  </p>
+</footer>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[action^='https://formspree.io']");
+    if(form) {
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const data = new FormData(form);
+        fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        }).then(response => {
+          if (response.ok) {
+            alert("Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ liên hệ sớm.");
+            form.reset();
+          } else {
+            alert("Có lỗi xảy ra, vui lòng thử lại.");
+          }
+        });
+      });
+    }
+  });
+</script>
+</body>
+</html>
